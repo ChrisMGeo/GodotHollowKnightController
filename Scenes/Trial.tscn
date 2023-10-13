@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfoo04kooh6dm"]
+
+[ext_resource type="PackedScene" uid="uid://cw8wh550kwhao" path="res://Prefabs/HKController.tscn" id="1_i4u2g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_430vy"]
+size = Vector2(100, 10000)
+
+[node name="Trial" type="Node2D"]
+
+[node name="HKController" parent="." node_paths=PackedStringArray("CameraOffset") instance=ExtResource("1_i4u2g")]
+position = Vector2(34, 47)
+CameraOffset = NodePath("CameraOffset2")
+HorizontalCameraBias = 100.0
+
+[node name="CameraOffset2" type="Marker2D" parent="HKController"]
+
+[node name="Camera2D" type="Camera2D" parent="HKController/CameraOffset2"]
+limit_left = -1200
+limit_right = 1250
+limit_bottom = 1000
+limit_smoothed = true
+drag_vertical_enabled = true
+drag_left_margin = 0.0
+drag_right_margin = 0.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-1050, -22)
+shape = SubResource("RectangleShape2D_430vy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-456, 668)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_430vy")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1113, 39)
+shape = SubResource("RectangleShape2D_430vy")

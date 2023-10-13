@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://i1byhs22wrsm"]
+
+[ext_resource type="Shader" path="res://Shaders/smooth_pixel.gdshader" id="1_pqsql"]
+
+[resource]
+shader = ExtResource("1_pqsql")

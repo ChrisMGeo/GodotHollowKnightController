@@ -1,0 +1,66 @@
+[gd_scene load_steps=13 format=3 uid="uid://cw8wh550kwhao"]
+
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/HollowKnightController.cs" id="1_avaov"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/StateMachine.cs" id="2_lidg7"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/Idle.cs" id="3_r0sxw"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/Air.cs" id="4_u5ve1"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/Run.cs" id="5_gw4ti"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/WallSlide.cs" id="6_bpe5c"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/WallJump.cs" id="7_v3ipp"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/StateMachine/States/Dash.cs" id="8_vqnmt"]
+[ext_resource type="Material" uid="uid://i1byhs22wrsm" path="res://Shaders/Materials/smooth_pixel.tres" id="9_4w85y"]
+[ext_resource type="SpriteFrames" uid="uid://ba1pftwu7ito" path="res://Configs/SpriteFrames/Warrior.tres" id="10_p8dom"]
+[ext_resource type="Script" path="res://Scripts/HollowKnightController/HollowKnightAnimatedSprite.cs" id="11_7aktv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83ute"]
+size = Vector2(30, 95)
+
+[node name="HKController" type="CharacterBody2D"]
+script = ExtResource("1_avaov")
+ReverseSprite = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_83ute")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_lidg7")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_r0sxw")
+
+[node name="Air" type="Node" parent="StateMachine"]
+script = ExtResource("4_u5ve1")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("5_gw4ti")
+
+[node name="WallSlide" type="Node" parent="StateMachine"]
+script = ExtResource("6_bpe5c")
+
+[node name="WallJump" type="Node" parent="StateMachine"]
+script = ExtResource("7_v3ipp")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("8_vqnmt")
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 2
+material = ExtResource("9_4w85y")
+position = Vector2(0, 25)
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("10_p8dom")
+animation = &"WallSlide"
+frame_progress = 0.33996
+script = ExtResource("11_7aktv")
+
+[node name="LeftWall" type="RayCast2D" parent="."]
+position = Vector2(0, 40)
+target_position = Vector2(-16, 0)
+
+[node name="RightWall" type="RayCast2D" parent="."]
+position = Vector2(0, 40)
+target_position = Vector2(16, 0)
+
+[connection signal="animation_finished" from="AnimatedSprite" to="AnimatedSprite" method="OnAnimationFinished"]
