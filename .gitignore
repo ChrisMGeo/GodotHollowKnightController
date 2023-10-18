@@ -3,3 +3,5 @@
 *.translation
 Assets/Sprites/
 Configs/SpriteFrames/Hollow*/
+Prefabs/HollowKnightController.tscn
+Scenes/HollowKnightTrial.tscn
